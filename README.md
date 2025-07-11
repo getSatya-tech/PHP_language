@@ -76,7 +76,7 @@ As previous, there are three types of scope
 
 ## Local
 ## Global
-##Static
+## Static
 
 ### Global Variable
 A variable declared outside a function has global scope and can only be accessed outside of the function.
@@ -92,12 +92,61 @@ myTest();
 
 echo “<p> Variable x outside of function is: $x </p>”;
 
+#### How to access global variable inside a function if needs ?? Use of Global keyword
+The global keyword is used to access the global variable inside a function 
+
+e.g.
+ 	$x = 5; $y = 10;
+  	function myTest(){
+   	global $x, $y;
+    	$y = $x + $y;
+   }
+   myTest();
+   echo $y; 		// output will be 15
+
+#### Notes: PHP also stores all variable in an array called $GLOBALS[index]
+index hold the name of variable . This array can also be access inside function and directly can update the value of global variable.
+
+
+e.g.
+$x = 5;
+$y = 10;
+function myTest(){
+$GLOBALS['y'] = $GLOBALS['x'] + $GLOBALS['y'];
+}
+myTest();
+echo $y; 	// result will be 15
+
+
+
 ### Local Variable 
 
 Variables defined under a function is referred to local scope and it can’t be accessed outside of function.
 
 function myTest(){
 	$x = 5 ; 		// local variable
-	
+ 	echo "<p> Variable x inside function is : $x </p>";
+  }
+  myTest();
 
+  // using x outside of function will give error
+echo "<p> Variable x outside the function is : $x </p>";
+
+### Static Keyword
+Generally, after execution of a function, variables get auto deleted but some we want to preserve specific variables 
+For this purpose we use static keyword
+
+function myTest(){
+static $x = 0;
+echo $x;
+$x++;
+}
+
+myTest();
+myTest();
+myTest();
+
+Then, each time the function is called, that variable will still have the information it contained from the last time the function was called.
+
+#### Note: The variable is still local to the function
 
